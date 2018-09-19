@@ -9,6 +9,11 @@ compile = (fileName) => {
   console.log('Compiling ' + fileName + ' file');
   const tokenPath = path.resolve(__dirname, 'contracts', fileName);
   const source = fs.readFileSync(tokenPath, 'utf8');
+  const compiled = solc.compile(source, 1);
+  if (compiled.errors) {
+    console.log(`Errors: ` + compiled.errors.join(""));
+    return;
+  }
   const output = solc.compile(source, 1).contracts;
   console.log('Compile ' + fileName + ' success');
 
